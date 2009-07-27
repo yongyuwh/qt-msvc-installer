@@ -1,0 +1,43 @@
+description: "Build the Qt Libraries on MSVC"
+properties: ['base.cfg', 'qt.cfg']
+scripts: ['qt.sh']
+default_host: "!py: props.build_host_by_os"
+steps:
+[
+  #Build
+  {
+    name: 'clean_source'
+    conditions: [ 'props.clean_build' ]
+  }
+  {
+    name: 'download_source'
+    conditions: [ 'props.clean_build' ]
+  }
+  {
+    name: 'unzip_source'
+    conditions: [ 'props.clean_build' ]
+  }
+  {
+    name: 'get_includes'
+    conditions: [ 'props.clean_build' ]
+  }
+  {
+    name: 'get_build'
+    conditions: [ 'props.clean_build' ]
+  }
+  {
+    name: 'configure'
+    conditions: [ 'props.clean_build' ]
+  }
+  {
+    name: 'make'
+    conditions: [ 'props.clean_build' ]
+  }
+  {
+    name: 'prepare_package'
+#    conditions: [ 'props.clean_build' ]
+  }
+  {
+    name: 'setup_package'
+  }
+]
