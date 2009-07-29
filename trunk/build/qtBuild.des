@@ -35,7 +35,7 @@ steps:
   }
   {
     name: 'prepare_package'
-#    conditions: [ 'props.clean_build' ]
+    conditions: [ 'props.clean_build' ]
   }
   {
     name: 'setup_package'
