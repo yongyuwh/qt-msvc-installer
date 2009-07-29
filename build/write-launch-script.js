@@ -38,15 +38,42 @@ tf.WriteLine("call \"" + installDir + "VC\\vcvarsall.bat\" " + varsPlatformCode)
 tf.WriteLine("echo All done...");
 tf.Close();
 
+//Command prompt launcher
 tf = fso.CreateTextFile(progPath + "\\" + progName + "CommandPrompt.bat", true);
 //Write out the cmd bat file
 tf.WriteLine("@echo off");
 tf.WriteLine("%COMSPEC% /k  \"" + varsFile + "\"");
 tf.Close();
 
+//Visual Studio launcher
 tf = fso.CreateTextFile(progPath + "\\" + progName + "VisualStudioStart.bat", true);
 //Write out the cmd bat file
 tf.WriteLine("@echo off");
 tf.WriteLine("call " + progName + "Vars.bat");
 tf.WriteLine("devenv /useenv");
 tf.Close();
+
+//Write qt.conf in bin dir
+re = /\\/g;
+qtProgPath = progPath.replace(re,"/");
+tf = fso.CreateTextFile(progPath + "\\bin\\qt.conf", true);
+//Write out the cmd bat file
+tf.WriteLine("[Paths]");
+tf.WriteLine("Prefix = " + qtProgPath);
+tf.WriteLine("Demos = demos");
+tf.WriteLine("Examples = examples");
+tf.Close();
+
+//Set proper qmake variables (Not necessary with qt.conf)
+// shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_PREFIX \"" + progPath + "\"");
+// shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_DATA \"" + progPath + "\"");
+// shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_DOCS \"" + progPath + "\\doc\"");
+// shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_HEADERS \"" + progPath + "\\include\"");
+// shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_LIBS \"" + progPath + "\\lib\"");
+// shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_BINS \"" + progPath + "\\bin\"");
+// shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_PLUGINS \"" + progPath + "\\plugins\"");
+// shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_TRANSLATIONS \"" + progPath + "\\translations\"");
+// shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_CONFIGURATION \"" + progPath + "\"");
+// shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_EXAMPLES \"" + progPath + "\\examples\"");
+// shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_DEMOS \"" + progPath + "\\demos\"");
+// shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QMAKE_MKSPECS \"" + progPath + "\\mkspecs\"");
