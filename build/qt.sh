@@ -27,7 +27,6 @@ svn co $build_url $source_dir/build/
 
 [configure]
 PRINT Configuring source
-cat test_file
 cd $extracted_dir; echo y | ./configure $config_flags
 #cd $extracted_dir; echo "echo y | configure $config_flags" | cmd /k "C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\vcvarsall.bat" x86
 [make]
