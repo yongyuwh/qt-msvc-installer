@@ -13,6 +13,7 @@
 #define MyStageDir "E:/Build/Qt/SourceWin32/qt-win-opensource-src-4.5.2"
 #define MyScriptWriterPath "E:/Build/Qt/SourceWin32/build/write-launch-script.js"
 #define MyRedistPath "E:/Build/Qt/SourceWin32/build/vcredist_x86.exe"
+#define MyOrigPath "E:/Build/Qt/SourceWin32/qt-win-opensource-src-4.5.2"
 #define MySetupIconPath "E:/Build/Qt/SourceWin32/qt-win-opensource-src-4.5.2/demos/qtdemo/qtdemo.ico"
 
 
@@ -70,7 +71,7 @@ Name: {group}\{cm:UninstallProgram,{#MyAppName}}; Filename: {uninstallexe}
 
 [Run]
 Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#MyAppName} Demo}; Flags: nowait postinstall skipifsilent
-Filename: cscript; Parameters: "{tmp}\write-launch-script.js {#MyAppName}  ""{app}"" {#MyPlatform}"; WorkingDir: {app}; StatusMsg: Creating a launch script for a {#MyAppName} configured command prompt
+Filename: cscript; Parameters: "{tmp}\write-launch-script.js {#MyAppName}  ""{app}"" ""{#MyOrigPath}"" {#MyPlatform}"; WorkingDir: {app}; StatusMsg: Creating a launch script for a {#MyAppName} configured command prompt
 Filename: {tmp}\vcredist.exe; StatusMsg: Installing Visual C++ 2008 Runtime...; Parameters: /q
 
 [Registry]

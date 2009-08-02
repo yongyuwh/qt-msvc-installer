@@ -3,7 +3,8 @@ var args = WScript.Arguments;
 var shell = WScript.CreateObject("WScript.Shell");
 var progName = args(0);
 var progPath = args(1);
-var platform = args(2);
+var oldPath  = args(2);
+var platform = args(3);
 var varsFile = progPath + "\\" + progName + "Vars.bat";
 var varsPlatformCode = "x86";
 var fso, tf;
@@ -12,6 +13,7 @@ if (platform != "Win32"){
   WScript.Echo("setting x86_amd64 platform code");
 }
 var installDir;
+WScript.Echo("'" + oldPath + "'");
 
 try{
   installDir = shell.RegRead("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio\\9.0\\InstallDir");
@@ -64,7 +66,34 @@ tf.WriteLine("Demos = demos");
 tf.WriteLine("Examples = examples");
 tf.Close();
 
-//Set proper qmake variables (Not necessary with qt.conf)
+//Append "." to QMAKE_INCDIR in qmake.conf (don't know why it doesn't go in automatically
+var ForReading = 1, ForAppending = 8;
+tf = fso.OpenTextFile(progPath + "\\mkspecs\\win32-msvc2008\\qmake.conf", ForAppending);
+tf.writeline("QMAKE_INCDIR += \".\"");
+tf.Close();
+
+//Replace build location with install location in all lib/*.prl files
+var libFolder = fso.GetFolder(progPath + "\\lib");
+var collection = libFolder.Files;
+var e = new Enumerator(collection)
+for (; !e.atEnd(); e.moveNext()){
+  var t = e.item();
+            //WScript.Echo(t.Path);
+  if(t.Path.match(".prl$"))
+  {
+    WScript.Echo("Fixing paths in: " + t.Path);
+    tf = fso.OpenTextFile(t.Path, ForReading);
+    var text = tf.ReadAll();
+    tf.Close();
+    var re = new RegExp(oldPath.replace(/\//g, "\\\\"), "gim");
+    text = text.replace(re, progPath);
+    tf = fso.CreateTextFile(t.Path, true);
+    tf.Write(text);
+    tf.Close();
+  }
+}
+
+//Set proper qmake variables (Not necessary with qt.conf properly configured)
 // shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_PREFIX \"" + progPath + "\"");
 // shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_DATA \"" + progPath + "\"");
 // shell.Run("\"" + progPath + "\\bin\\qmake.exe\" -set QT_INSTALL_DOCS \"" + progPath + "\\doc\"");
