@@ -105,7 +105,13 @@ echo "#define MyOutputDir \"${base_dir}/${local_package_dir}\"" >> ${source_dir}
 echo "#define MyStageDir \"${base_dir}/${extracted_dir}\"" >> ${source_dir}/install_script.iss
 echo "#define MyScriptWriterPath \"${base_dir}/${source_dir}/build/write-launch-script.js\"" >> ${source_dir}/install_script.iss
 echo "#define MyRedistPath \"${base_dir}/${source_dir}/build/${redist_name}\"" >> ${source_dir}/install_script.iss
+echo "#define MyOrigPath \"${base_dir}/${extracted_dir}\"" >> ${source_dir}/install_script.iss
 echo "#define MySetupIconPath \"${base_dir}/${extracted_dir}/demos/qtdemo/qtdemo.ico\"" >> ${source_dir}/install_script.iss
 
-tail -n +17 ${source_dir}/build/setup.iss >> ${source_dir}/install_script.iss
+tail -n +18 ${source_dir}/build/setup.iss >> ${source_dir}/install_script.iss
 "$istool_exe" -compile ${source_dir}/install_script.iss
+
+chmod a+rx ${local_package_dir}/${product_name}-${os_abbrev}-${product_version}${name_extra}.exe
+rm -rf ${local_package_dir}/${final_package_name}
+mv ${local_package_dir}/${product_name}-${os_abbrev}-${product_version}${name_extra}.exe ${local_package_dir}/${final_package_name}
+
