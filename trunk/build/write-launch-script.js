@@ -21,8 +21,15 @@ try{
   installDir = installDir.substring(0,installDir.length-12);
   WScript.Echo("Found VS 2008 at: " + installDir);
 }catch(exception){
-  shell.Popup("A installation of Visual Studio 2008 was not found in the registry, guessing path...");
-  installDir = "C:\\Program Files\\Microsoft Visual Studio 9.0\\";
+  try{
+    installDir = shell.RegRead("HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Microsoft\\VisualStudio\\9.0\\InstallDir");
+    //Remove the "Common7\IDE\" at the end of the dir
+    installDir = installDir.substring(0,installDir.length-12);
+    WScript.Echo("Found VS 2008 at: " + installDir);
+  }catch(exception){
+    shell.Popup("A installation of Visual Studio 2008 was not found in the registry, guessing path...");
+    installDir = "C:\\Program Files\\Microsoft Visual Studio 9.0\\";
+  }
 }
 fso = new ActiveXObject("Scripting.FileSystemObject");
 WScript.Echo("Writting " + varsFile);
