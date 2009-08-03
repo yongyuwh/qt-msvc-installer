@@ -114,3 +114,6 @@ chmod a+rx ${local_package_dir}/${product_name}-${os_abbrev}-${product_version}$
 rm -rf ${local_package_dir}/${final_package_name}
 mv ${local_package_dir}/${product_name}-${os_abbrev}-${product_version}${name_extra}.exe ${local_package_dir}/${final_package_name}
 
+PRINT Printing submit info to text file
+echo "${product_full_name} Installer" > ${base_dir}/${local_package_dir}/${final_package_name}.txt
+echo "Featured,Type-Installer,${os_type}" >> ${base_dir}/${local_package_dir}/${final_package_name}.txt
