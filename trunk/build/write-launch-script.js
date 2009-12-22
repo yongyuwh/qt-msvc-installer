@@ -64,7 +64,7 @@ tf.Close();
 
 //Write qt.conf in bin dir
 re = /\\/g;
-qtProgPath = progPath.replace(re,"/");
+qtProgPath = progPath.replace(re,"\\\\");
 tf = fso.CreateTextFile(progPath + "\\bin\\qt.conf", true);
 //Write out the cmd bat file
 tf.WriteLine("[Paths]");
