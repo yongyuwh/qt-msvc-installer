@@ -9,6 +9,7 @@
 #define MyAppId "{{6BF23811-0ADC-4736-92A8-2B885629594D}"
 #define MyPlatform "Win32"
 #define MyPlatformCode = ""
+#define MyOSCode = ""
 #define MyOutputDir "E:/Build/Qt/SourceWin32/InstallerWin32"
 #define MyStageDir "E:/Build/Qt/SourceWin32/qt-win-opensource-src-4.5.2"
 #define MyScriptWriterPath "E:/Build/Qt/SourceWin32/build/write-launch-script.js"
@@ -38,8 +39,8 @@ Compression=lzma
 SolidCompression=true
 UninstallDisplayIcon={app}\bin\qtdemo.exe
 UninstallDisplayName={#MyAppVerName}
-ArchitecturesInstallIn64BitMode={#MyPlatformCode}
-ArchitecturesAllowed={#MyPlatformCode}
+ArchitecturesInstallIn64BitMode={#MyOSCode}
+ArchitecturesAllowed={#MyOSCode}
 
 VersionInfoDescription={#MyAppName}-{#MyPlatform}-{#MyAppVer}
 VersionInfoTextVersion={#MyAppName}-{#MyPlatform}-{#MyAppVer}
