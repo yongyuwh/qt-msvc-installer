@@ -31,7 +31,7 @@ steps:
   }
   {
     name: 'make'
-    #conditions: [ 'props.clean_build' ]
+    conditions: [ 'props.clean_build' ]
   }
   {
     name: 'prepare_package'

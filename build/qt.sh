@@ -32,8 +32,15 @@ cd $build_dir; patch -p0 < ${base_dir}/$source_dir/build/qlibraryinfo.patch
 
 [configure]
 PRINT Configuring source
-cd $build_dir; echo y | ./configure $config_flags
+#env
+cd $build_dir; echo y | ./configure.exe $config_flags
 #cd $build_dir; echo "echo y | configure $config_flags" | cmd /k "C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\vcvarsall.bat" x86
+
+[write_configure_script]
+PRINT Give up on trying to get the build system happy with the cygwin env, run this in the proper MSVC cmd env
+echo "echo y | configure.exe $config_flags" > $build_dir/build_script.bat
+echo "nmake" >> $build_dir/build_script.bat
+
 
 [make]
 PRINT Makeing
@@ -91,6 +98,13 @@ PRINT Cleaning up src
 /usr/bin/find $build_dir/src -name "*Makefile" -exec rm -rf {} +
 /usr/bin/find $build_dir/src -name "*Makefile.Release" -exec rm -rf {} +
 /usr/bin/find $build_dir/src -name "*Makefile.Debug" -exec rm -rf {} +
+
+/usr/bin/find $build_dir/src/tools -name "*.obj" -exec rm -rf {} +
+/usr/bin/find $build_dir/src -name "ChangeLog*" -exec rm -rf {} +
+rm -rf $build_dir/src/3rdparty/webkit/WebCore/obj
+rm -rf $build_dir/src/script/obj
+rm -rf $build_dir/doc/src
+
 
 [setup_package]
 PRINT Making the installer in ${local_package_dir}
