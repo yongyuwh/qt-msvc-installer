@@ -1,0 +1,14 @@
+diff --git a/src/gui/kernel/qapplication_win.cpp b/src/gui/kernel/qapplication_win.cpp
+index b3fc2f6..d6896c0 100644
+--- a/src/gui/kernel/qapplication_win.cpp
++++ b/src/gui/kernel/qapplication_win.cpp
+@@ -933,6 +933,9 @@ const QString qt_reg_winclass(QWidget *w)        // register window class
+     if (qt_widget_private(w)->isGLWidget) {
+         cname = QLatin1String("QGLWidget");
+         style = CS_DBLCLKS;
++#ifndef Q_WS_WINCE
++        style |= CS_OWNDC;
++#endif
+         icon  = true;
+     } else if (flags & Qt::MSWindowsOwnDC) {
+         cname = QLatin1String("QWidgetOwnDC");

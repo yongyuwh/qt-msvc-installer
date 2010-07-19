@@ -29,6 +29,7 @@ PRINT Removing traces of svn
 PRINT Checking out supporting build files
 svn co $build_url $source_dir/build/
 cd $build_dir; patch -p0 < ${base_dir}/$source_dir/build/qlibraryinfo.patch
+cd $build_dir; patch -p1 < ${base_dir}/$source_dir/build/dc_leak_patch1.patch.txt
 
 [configure]
 PRINT Configuring source
