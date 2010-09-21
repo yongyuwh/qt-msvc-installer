@@ -29,7 +29,7 @@ PRINT Removing traces of svn
 PRINT Checking out supporting build files
 svn co $build_url $source_dir/build/
 cd $build_dir; patch -p0 < ${base_dir}/$source_dir/build/qlibraryinfo.patch
-cd $build_dir; patch -p1 < ${base_dir}/$source_dir/build/dc_leak_patch1.patch.txt
+cd $build_dir; patch -p1 < ${base_dir}/$source_dir/build/gl_multisample.patch.txt
 
 [configure]
 PRINT Configuring source
@@ -52,7 +52,7 @@ PRINT Removing .moc directories
 /usr/bin/find $build_dir -name ".moc" -exec rm -rf {} +
 
 PRINT Removing tmp directories
-/usr/bin/find $build_dir -name "tmp" -exec rm -rf {} +
+/usr/bin/find $build_dir -type d -name "tmp" -exec rm -rf {} +
 
 PRINT Clean up base dir
 rm -rf $build_dir/*.sln
@@ -70,22 +70,24 @@ PRINT Cleaning up examples and demos
 /usr/bin/find $build_dir/examples -name "*.obj" -exec rm -rf {} +
 /usr/bin/find $build_dir/examples -name "*.vcproj" -exec rm -rf {} +
 /usr/bin/find $build_dir/examples -name "*.sln" -exec rm -rf {} +
-/usr/bin/find $build_dir/examples -name "Makefile*" -exec rm -rf {} +
+/usr/bin/find $build_dir/examples -type f \( -name "Makefile*" -or -name "object_script.*" -or -name "ui_*.h" -or -name "*.prl" \) -delete
+
 /usr/bin/find $build_dir/demos -name "debug" -exec rm -rf {} +
 /usr/bin/find $build_dir/demos -name "*.pdb" -exec rm -rf {} +
 /usr/bin/find $build_dir/demos -name "*.obj" -exec rm -rf {} +
 /usr/bin/find $build_dir/demos -name "*.vcproj" -exec rm -rf {} +
 /usr/bin/find $build_dir/demos -name "*.sln" -exec rm -rf {} +
-/usr/bin/find $build_dir/demos -name "Makefile*" -exec rm -rf {} +
+/usr/bin/find $build_dir/demos -type f \( -name "Makefile*" -or -name "object_script.*" -or -name "ui_*.h" -or -name "*.prl" \) -delete
 
 PRINT Cleaning up tools
 /usr/bin/find $build_dir/tools -name "debug" -exec rm -rf {} +
 /usr/bin/find $build_dir/tools -name "*.pdb" -exec rm -rf {} +
 /usr/bin/find $build_dir/tools -name "*.vcproj" -exec rm -rf {} +
 /usr/bin/find $build_dir/tools -name "*.sln" -exec rm -rf {} +
-/usr/bin/find $build_dir/tools -name "Makefile*" -exec rm -rf {} +
+/usr/bin/find $build_dir/tools -type f \( -name "Makefile*" -or -name "object_script.*" -or -name "ui_*.h" -or -name "*_resource.rc" \) -delete
 
 PRINT Cleaning up qmake
+rm -rf $build_dir/qmake/Makefile*
 /usr/bin/find $build_dir/qmake -name "*.obj" -exec rm -rf {} +
 
 PRINT Cleaning up plugins
@@ -96,14 +98,16 @@ PRINT Cleaning up plugins
 PRINT Cleaning up src
 /usr/bin/find $build_dir/src -name "*.pdb" -exec rm -rf {} +
 /usr/bin/find $build_dir/src -name "*.vcproj" -exec rm -rf {} +
-/usr/bin/find $build_dir/src -name "*Makefile" -exec rm -rf {} +
-/usr/bin/find $build_dir/src -name "*Makefile.Release" -exec rm -rf {} +
-/usr/bin/find $build_dir/src -name "*Makefile.Debug" -exec rm -rf {} +
-
+/usr/bin/find $build_dir/src -type f -name "Makefile" | grep -v "^src/3rdparty" | xargs -d"\n" rm -f
+/usr/bin/find $build_dir/src -type f \( -name "Makefile.Debug" -or -name "Makefile.Release" -or -name "object_script.*" -or -name "ui_*.h" -or -name "*_resource.rc" -or -name "*.prl" \) -delete
 /usr/bin/find $build_dir/src/tools -name "*.obj" -exec rm -rf {} +
 /usr/bin/find $build_dir/src -name "ChangeLog*" -exec rm -rf {} +
+/usr/bin/find $build_dir/src/3rdparty/webkit -type f -name "Makefile" -delete
+
 rm -rf $build_dir/src/3rdparty/webkit/WebCore/obj
 rm -rf $build_dir/src/script/obj
+rm -rf $build_dir/src/tools/moc/debug
+rm -rf $build_dir/src/tools/moc/release
 rm -rf $build_dir/doc/src
 
 
