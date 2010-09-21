@@ -110,6 +110,11 @@ rm -rf $build_dir/src/tools/moc/debug
 rm -rf $build_dir/src/tools/moc/release
 rm -rf $build_dir/doc/src
 
+PRINT Cleaning translations...
+rm -f  $build_dir/translations/Makefile*
+rm -f  $build_dir/translations/*.qm
+rm -rf $build_dir/translations/debug
+rm -rf $build_dir/translations/release
 
 [setup_package]
 PRINT Making the installer in ${local_package_dir}
