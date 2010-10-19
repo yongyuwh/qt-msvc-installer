@@ -29,7 +29,7 @@ PRINT Removing traces of svn
 PRINT Checking out supporting build files
 svn co $build_url $source_dir/build/
 cd $build_dir; patch -p0 < ${base_dir}/$source_dir/build/qlibraryinfo.patch
-cd $build_dir; patch -p1 < ${base_dir}/$source_dir/build/gl_multisample.patch.txt
+cd $build_dir; patch -p1 < ${base_dir}/$source_dir/build/checkbox-windows-XP.patch
 
 [configure]
 PRINT Configuring source
@@ -105,16 +105,24 @@ PRINT Cleaning up src
 /usr/bin/find $build_dir/src/3rdparty/webkit -type f -name "Makefile" -delete
 
 rm -rf $build_dir/src/3rdparty/webkit/WebCore/obj
+rm -rf $build_dir/src/3rdparty/webkit/JavaScriptCore/debug
+rm -rf $build_dir/src/3rdparty/webkit/JavaScriptCore/release
 rm -rf $build_dir/src/script/obj
 rm -rf $build_dir/src/tools/moc/debug
 rm -rf $build_dir/src/tools/moc/release
+rm -rf $build_dir/src/tools/bootstrap/release
 rm -rf $build_dir/doc/src
+rm -rf $build_dir/doc/html/qt.index
 
 PRINT Cleaning translations...
 rm -f  $build_dir/translations/Makefile*
 rm -f  $build_dir/translations/*.qm
 rm -rf $build_dir/translations/debug
 rm -rf $build_dir/translations/release
+
+[move_extra]
+mv $build_dir/bin/QtWebKit4.pdb ${local_package_dir}/
+cd ${local_package_dir}; zip ${product_name}-${os_abbrev}-${product_version}${name_extra}-QtWebKit4.pdf.zip QtWebKit4.pdb
 
 [setup_package]
 PRINT Making the installer in ${local_package_dir}
