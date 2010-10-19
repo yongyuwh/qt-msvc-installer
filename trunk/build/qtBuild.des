@@ -38,6 +38,10 @@ steps:
     #conditions: [ 'props.clean_build' ]
   }
   {
+    name: 'move_extra'
+    #conditions: [ 'props.clean_build' ]
+  }
+  {
     name: 'setup_package'
   }
 ]
