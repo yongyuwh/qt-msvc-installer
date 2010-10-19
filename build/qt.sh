@@ -121,8 +121,8 @@ rm -rf $build_dir/translations/debug
 rm -rf $build_dir/translations/release
 
 [move_extra]
-mv $build_dir/bin/QtWebKit4.pdb ${local_package_dir}/
-cd ${local_package_dir}; zip ${product_name}-${os_abbrev}-${product_version}${name_extra}-QtWebKit4.pdf.zip QtWebKit4.pdb
+mv $build_dir/bin/QtWebKitd4.pdb ${local_package_dir}/
+cd ${local_package_dir}; zip ${product_name}-${os_abbrev}-${product_version}${name_extra}-QtWebKitd4.pdb.zip QtWebKitd4.pdb
 
 [setup_package]
 PRINT Making the installer in ${local_package_dir}
