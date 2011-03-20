@@ -29,7 +29,8 @@ PRINT Removing traces of svn
 PRINT Checking out supporting build files
 svn co $build_url $source_dir/build/
 cd $build_dir; patch -p0 < ${base_dir}/$source_dir/build/qlibraryinfo.patch
-cd $build_dir; patch -p1 < ${base_dir}/$source_dir/build/checkbox-windows-XP.patch
+#cd $build_dir; patch -p1 < ${base_dir}/$source_dir/build/gl_multisample.patch.txt
+#cd $build_dir; patch -p1 < ${base_dir}/$source_dir/build/checkbox-windows-XP.patch
 
 [configure]
 PRINT Configuring source
@@ -121,8 +122,10 @@ rm -rf $build_dir/translations/debug
 rm -rf $build_dir/translations/release
 
 [move_extra]
-mv $build_dir/bin/QtWebKitd4.pdb ${local_package_dir}/
-cd ${local_package_dir}; zip ${product_name}-${os_abbrev}-${product_version}${name_extra}-QtWebKitd4.pdb.zip QtWebKitd4.pdb
+mkdir -p ${local_package_dir}/pdb
+rm -f ${local_package_dir}/pdb/*
+mv $build_dir/bin/*.pdb ${local_package_dir}/pdb
+cd ${local_package_dir}/pdb; zip ../${product_name}-${os_abbrev}-${product_version}${name_extra}-pdb.zip *.pdb
 
 [setup_package]
 PRINT Making the installer in ${local_package_dir}
