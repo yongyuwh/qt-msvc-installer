@@ -1,11 +1,11 @@
---- src/corelib/global/qlibraryinfo.cpp	2009-12-23 09:08:31.745250000 -0700
-+++ src/corelib/global/qlibraryinfo.cpp	2009-12-22 23:43:29.142625000 -0700
-@@ -450,7 +450,7 @@
- #endif
-         } else {
+--- src/corelib/global/qlibraryinfo.cpp	2011-12-07 22:06:03.000000000 -0700
++++ src/corelib/global/qlibraryinfo.cpp	2011-12-15 10:59:40.416624000 -0700
+@@ -476,7 +476,7 @@
              // we make any other path absolute to the prefix directory
--            return QDir(location(PrefixPath)).absoluteFilePath(ret);
-+            return QDir::toNativeSeparators(QDir(location(PrefixPath)).absoluteFilePath(ret));
+             baseDir = location(PrefixPath);
          }
+-        ret = QDir::cleanPath(baseDir + QLatin1Char('/') + ret);
++        ret = QDir::toNativeSeparators(QDir::cleanPath(baseDir + QLatin1Char('/') + ret));
      }
      return ret;
+ }
