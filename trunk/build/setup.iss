@@ -46,6 +46,8 @@ VersionInfoDescription={#MyAppName}-{#MyPlatform}-{#MyAppVer}
 VersionInfoTextVersion={#MyAppName}-{#MyPlatform}-{#MyAppVer}
 VersionInfoCompany={#MyAppPublisher}
 RestartIfNeededByRun=false
+DiskSpanning=true
+DiskSliceSize=199229440
 
 [Languages]
 Name: english; MessagesFile: compiler:Default.isl
